@@ -1,5 +1,6 @@
 import glob
 import json
+from operator import is_not
 import os
 from pprint import pprint
 import requests
@@ -7,6 +8,11 @@ import json
 import zipfile
 import io
 import sys
+from service.firebase import get_firestore_client
+from google.cloud.firestore_v1.client import Client
+
+db: Client = get_firestore_client()
+
 
 from service.index_and_keys import IndexAndKeys
 
@@ -27,11 +33,7 @@ def main():
         "https://disclosure.edinet-fsa.go.jp/api/v1/documents.json?date=2021-06-28&type=2"
     )
     reports = json.loads(r.text)
-    securities_reports_filter = list(filter(is_scurities_report, reports["results"]))[
-        0:1
-    ]
-
-    # XBRLのキー名を取得
+    securities_reports_filter = list(filter(is_scurities_report, reports["results"]))
 
     # ダウンロードしてXBRLに解析
     base_path = "/tmp/golden-egg-system/"
@@ -91,19 +93,25 @@ def main():
                 end_date = fact.context.endDatetime
             else:
                 end_date = None
-            pprint(
+            db.collection("xbrls").add(
                 {
-                    "namespaceURI": fact.namespaceURI,
+                    "edinet_code": securities_report["edinetCode"],
+                    "filer_name": securities_report["filerName"],
+                    "doc_description": securities_report["docDescription"],
+                    "doc_id": securities_report["docID"],
+                    "JCN": securities_report["JCN"],
+                    "doc_type_code": securities_report["docTypeCode"],
+                    "namespace_uri": fact.namespaceURI,
                     "label_ja": label_ja,
                     "label_en": label_en,
                     "prefix": fact.prefix,
-                    "localName": fact.localName,
-                    "x_value": x_value,
+                    "local_name": fact.localName,
+                    "x_value": None if x_value is None else float(x_value),
                     "unit": unit,
                     "instant_date": instant_date,
                     "start_date": start_date,
                     "end_date": end_date,
-                    "contextID": fact.contextID,
+                    "context_id": fact.contextID,
                 }
             )
 

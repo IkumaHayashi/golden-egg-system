@@ -14,3 +14,20 @@ XBRLをダウンロードして解析しFirestore（仮）に格納する
   `docker build -t xbrl_parser .`
 - run
   `docker run -it xbrl_parser`
+
+## デプロイ
+- なぜか`asia-northeast1`で行うとエラーが出るため`us-west2`でやってる
+- Artifact ResistryでDockerリポジトリ作成
+  `gcloud artifacts repositories create xbrlparser-docker-repo --repository-format=docker --location=us-west2 --description="xbrl_parser docker repository"`
+- Dockerfileを仕様してビルド
+  `gcloud builds submit --region=us-west2  --tag us-west2-docker.pkg.dev/dev-golden-egg/xbrlparser-docker-repo/xbrlparser-image:tag1`
+- ジョブの作成
+  ```
+  gcloud beta run jobs create xbrl-parser \
+    --image us-west2-docker.pkg.dev/dev-golden-egg/xbrlparser-docker-repo/xbrlparser-image:tag1 \
+    --tasks 1 \
+    --region us-west2
+  ```
+
+## 実行
+`gcloud beta run jobs execute xbrl-parser`
