@@ -19,13 +19,6 @@ from service.index_and_keys import IndexAndKeys
 sys.path.append("./Arelle")
 from Arelle.arelle import Cntlr
 
-# Retrieve Job-defined env vars
-TASK_INDEX = os.getenv("CLOUD_RUN_TASK_INDEX", 0)
-TASK_ATTEMPT = os.getenv("CLOUD_RUN_TASK_ATTEMPT", 0)
-# Retrieve User-defined env vars
-SLEEP_MS = os.getenv("SLEEP_MS", 0)
-FAIL_RATE = os.getenv("FAIL_RATE", 0)
-
 # Define main script
 def main():
     # 有価証券報告書のリストを取得
@@ -33,12 +26,16 @@ def main():
         "https://disclosure.edinet-fsa.go.jp/api/v1/documents.json?date=2021-06-28&type=2"
     )
     reports = json.loads(r.text)
-    securities_reports_filter = list(filter(is_scurities_report, reports["results"]))
+    securities_reports_filter = list(filter(is_scurities_report, reports["results"]))[
+        0:3
+    ]
 
     # ダウンロードしてXBRLに解析
     base_path = "/tmp/golden-egg-system/"
     os.makedirs(base_path, exist_ok=True)
     for securities_report in securities_reports_filter:
+        pprint("securites_report")
+        pprint(securities_report)
 
         # ダウンロード
         r = requests.get(

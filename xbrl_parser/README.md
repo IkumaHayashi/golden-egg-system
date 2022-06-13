@@ -14,6 +14,11 @@ XBRLをダウンロードして解析しFirestore（仮）に格納する
   `docker build -t xbrl_parser .`
 - run
   `docker run -it xbrl_parser`
+- ローカルでの実行
+  ```
+  export FIRESTORE_EMULATOR_HOST=localhost:8080
+  python3 main.py
+  ```
 
 ## デプロイ
 - なぜか`asia-northeast1`で行うとエラーが出るため`us-west2`でやってる
