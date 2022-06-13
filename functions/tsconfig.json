@@ -1,15 +1,24 @@
 {
   "compilerOptions": {
+    "target": "es2020",
     "module": "commonjs",
+    "lib": ["es2020"],
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "rootDir": "./src",
     "outDir": "lib",
+    "baseUrl": "src",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "resolveJsonModule": true
   },
   "compileOnSave": true,
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
 }
