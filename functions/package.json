@@ -9,7 +9,7 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "fsemulator": "export JAVA_TOOL_OPTIONS='-Xmx4g';firebase emulators:start --only firestore --import=./firestore_emulator_data --export-on-exit"
+    "fsemulator": "export JAVA_TOOL_OPTIONS='-Xmx8g';firebase emulators:start --only firestore --import=./firestore_emulator_data --export-on-exit"
   },
   "engines": {
     "node": "16"
