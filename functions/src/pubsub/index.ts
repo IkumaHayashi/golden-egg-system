@@ -1,4 +1,4 @@
-import { fetchDocuments } from "./fetchDocuments";
+import { insertEdinetCodeList } from "./insertEdinetCodeList"
 export default {
-  fetchDocuments,
+  insertEdinetCodeList
 };

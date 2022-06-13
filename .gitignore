@@ -69,3 +69,4 @@ node_modules/
 .history
 functions/.runtimeconfig.json
 xbrl_parser/config/firebase-adminsdk.json
+functions/firestore_emulator_data
