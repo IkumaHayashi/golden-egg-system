@@ -1,15 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
-const firebaseConfig = {
-  apiKey: "AIzaSyDs7lGjiBjmZaJshAhJRgXbE0ubObGtx_s",
-  authDomain: "dev-golden-egg.firebaseapp.com",
-  projectId: "dev-golden-egg",
-  storageBucket: "dev-golden-egg.appspot.com",
-  messagingSenderId: "662187848513",
-  appId: "1:662187848513:web:1f5360e4ef1d8cd7a9a7c0",
-  measurementId: "G-JDZSTC5K87",
-};
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+});
 const db = getFirestore(app);
 if (location.host.startsWith("localhost")) {
   connectFirestoreEmulator(db, "localhost", 8080);
