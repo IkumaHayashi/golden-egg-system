@@ -67,6 +67,7 @@ node_modules/
 
 # VSCode拡張機能 LocalHistory
 .history
+xbrl_parser/Arelle
 functions/.runtimeconfig.json
 xbrl_parser/config/firebase-adminsdk.json
 functions/firestore_emulator_data
