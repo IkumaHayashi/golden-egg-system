@@ -6,12 +6,17 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
+    paths:
+      - 'web'
+      - '.github/workflows/web-firebase-hosting-merge.yml'
 jobs:
   build_and_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: yarn --cwd web --frozen-lockfile && yarn --cwd web build
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.15.0
+          cache: yarn
+          cache-dependency-path: web/yarn.lock
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
