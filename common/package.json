@@ -1,0 +1,21 @@
+{
+  "name": "common",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "tsc-watch",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tsc-watch": "^5.0.3",
+    "typescript": "^4.7.4"
+  }
+}
