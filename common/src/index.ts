@@ -1,3 +1,3 @@
 import { EdinetDocument } from "./firestore/models/edinetDocument"
-import { FinancialIndicator } from "./firestore/models/financialIndicators"
+import { FinancialIndicator } from "./firestore/models/financialIndicator"
 export {EdinetDocument, FinancialIndicator}
