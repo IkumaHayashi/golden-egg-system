@@ -6,7 +6,7 @@
     "build": "tsc",
     "serve": "tsc-watch --onFirstSuccess 'firebase emulators:start --only functions,firestore'",
     "shell": "firebase functions:config:get > .runtimeconfig.json && firebase functions:shell",
-    "start": "npm run shell",
+    "start": "yarn shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "fsemulator": "export JAVA_TOOL_OPTIONS='-Xmx8g';firebase emulators:start --only firestore --import=./firestore_emulator_data --export-on-exit"
