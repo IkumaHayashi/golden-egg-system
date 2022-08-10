@@ -1,9 +1,11 @@
 {
   "name": "functions",
+  "type": "module",
   "scripts": {
     "lint": "eslint --ext .js,.ts . --fix",
     "format": "prettier --write .",
     "build": "tsc",
+    "dev": "tsc-watch",
     "serve": "tsc-watch --onFirstSuccess 'firebase emulators:start --only functions,firestore'",
     "shell": "firebase functions:config:get > .runtimeconfig.json && firebase functions:shell",
     "start": "yarn shell",
@@ -17,6 +19,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "axios": "^0.27.2",
+    "common": "link:../common",
     "crypto": "^1.0.1",
     "firebase-admin": "^10.2.0",
     "firebase-functions": "^3.14.1",

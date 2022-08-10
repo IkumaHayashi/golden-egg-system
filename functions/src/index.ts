@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase-admin/app";
 initializeApp();
-
-import pubsub from "./pubsub/index";
-export { pubsub };
+console.log("done initializeApp");
+import api from "./api/index.js";
+export { api };
