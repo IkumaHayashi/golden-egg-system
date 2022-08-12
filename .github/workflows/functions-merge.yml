@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: 実行環境構築
-        uses: .github/workflows/composite/build
+        uses: .github/workflows/composite/setup
         with:
           NODE_CACHE_DEPENDENCY_PATH: functions/yarn.lock
       - run: yarn --cwd functions --frozen-lockfile && yarn --cwd functions build
