@@ -6,7 +6,7 @@
     "format": "prettier --write .",
     "build": "tsc",
     "dev": "tsc-watch",
-    "serve": "tsc-watch --onFirstSuccess 'firebase emulators:start --only functions,firestore'",
+    "serve": "firebase emulators:start --only functions,firestore",
     "shell": "firebase functions:config:get > .runtimeconfig.json && firebase functions:shell",
     "start": "yarn shell",
     "deploy": "firebase deploy --only functions",

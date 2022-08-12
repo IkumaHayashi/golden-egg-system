@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase-admin/app";
 initializeApp();
-console.log("done initializeApp");
-import api from "./api/index.js";
+import { api } from "./api/api.js";
 export { api };
