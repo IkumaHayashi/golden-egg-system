@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "commonjs",
+    "module": "NodeNext",
     "lib": ["es2020"],
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -10,7 +10,7 @@
     "baseUrl": "src",
     "sourceMap": true,
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -20,5 +20,5 @@
     "resolveJsonModule": true
   },
   "compileOnSave": true,
-  "include": ["src"],
+  "include": ["src"]
 }

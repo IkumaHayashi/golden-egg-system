@@ -1,6 +1,6 @@
 import glob
+import hashlib
 import json
-from operator import is_not
 import os
 from pprint import pprint
 import requests
@@ -54,6 +54,20 @@ def main():
         ctrl = Cntlr.Cntlr(logFileName="logToPrint")
         model_xbrl = ctrl.modelManager.load(xbrl_file_path)
 
+        edinet_document_id = hashlib.sha1(
+            securities_report["docID"].encode("utf-8")
+        ).hexdigest()
+        edinet_document = {
+            "doc_id": securities_report["docID"],
+            "doc_description": securities_report["docDescription"],
+            "doc_type_code": securities_report["docTypeCode"],
+            "edinet_code": securities_report["edinetCode"],
+            "filer_name": securities_report["filerName"],
+            "period_start": securities_report["periodStart"],
+            "period_end": securities_report["periodEnd"],
+            "financial_indicators": [],
+        }
+
         for fact in model_xbrl.facts:
 
             if not (fact.concept.qname.localName in IndexAndKeys().all_keys):
@@ -90,27 +104,24 @@ def main():
                 end_date = fact.context.endDatetime
             else:
                 end_date = None
-            db.collection("xbrls").add(
-                {
-                    "edinet_code": securities_report["edinetCode"],
-                    "filer_name": securities_report["filerName"],
-                    "doc_description": securities_report["docDescription"],
-                    "doc_id": securities_report["docID"],
-                    "JCN": securities_report["JCN"],
-                    "doc_type_code": securities_report["docTypeCode"],
-                    "namespace_uri": fact.namespaceURI,
-                    "label_ja": label_ja,
-                    "label_en": label_en,
-                    "prefix": fact.prefix,
-                    "local_name": fact.localName,
-                    "x_value": None if x_value is None else float(x_value),
-                    "unit": unit,
-                    "instant_date": instant_date,
-                    "start_date": start_date,
-                    "end_date": end_date,
-                    "context_id": fact.contextID,
-                }
-            )
+
+            financial_indicator = {
+                "label_ja": label_ja,
+                "label_en": label_en,
+                "prefix": fact.prefix,
+                "local_name": fact.localName,
+                "x_value": None if x_value is None else float(x_value),
+                "unit": unit,
+                "start_date": start_date,
+                "end_date": end_date,
+                "context_id": fact.contextID,
+                "decimals": None if x_value is None else int(fact.decimals),
+            }
+            edinet_document["financial_indicators"].append(financial_indicator)
+
+        db.collection("edinet_documents").document(edinet_document_id).set(
+            edinet_document
+        )
 
         ctrl.modelManager.close()
         ctrl.close()

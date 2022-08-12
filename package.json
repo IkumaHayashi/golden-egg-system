@@ -1,0 +1,18 @@
+{
+  "name": "golden-egg-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:IkumaHayashi/golden-egg-system.git",
+  "author": "IkumaHayashi <ikuma.hayashi.tech@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:web": "yarn --cwd web dev",
+    "dev:common": "yarn --cwd common dev",
+    "dev:functions": "yarn --cwd functions dev",
+    "dev:emulator": "export JAVA_TOOL_OPTIONS='-Xmx8g';firebase emulators:start --only firestore,functions --import=./functions/firestore_emulator_data --export-on-exit"
+  },
+  "devDependencies": {
+    "yarn-run-all": "^3.1.1"
+  }
+}
