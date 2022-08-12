@@ -1,6 +1,7 @@
 import { EdinetCode, RawEdinetCode } from "common";
 import EdinetcodeDlInfo from "./EdinetcodeDlInfo.json" assert { type: "json" };
 import express from "express";
+// eslint-disable-next-line new-cap
 const router = express.Router();
 router.get("/", (req, res) => {
   const edinetCodes = (EdinetcodeDlInfo as Array<RawEdinetCode>).map(
