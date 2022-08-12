@@ -1,0 +1,16 @@
+name: 必要なモジュールをインストール
+inputs:
+  NODE_CACHE_DEPENDENCY_PATH:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Node.jsをインストール
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.15.0
+        cache: yarn
+        cache-dependency-path: ${{inputs.NODE_CACHE_DEPENDENCY_PATH}}
+    - name: FirebaseToolsのインストール
+      shell: bash
+      run: npm install -g firebase-tools@latest
