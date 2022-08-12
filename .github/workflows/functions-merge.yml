@@ -8,7 +8,7 @@ on:
       - main
       - test/deploy/**
     paths:
-      - "functions"
+      - "functions/**"
       - ".github/workflows/functions-merge.yml"
 jobs:
   functions_deploy:
