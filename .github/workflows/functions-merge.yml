@@ -20,6 +20,6 @@ jobs:
         with:
           NODE_CACHE_DEPENDENCY_PATH: functions/yarn.lock
       - run: yarn --cwd functions --frozen-lockfile && yarn --cwd functions build
-      - name: 秘密鍵の作成
+      - name: デプロイ
         run: |
           npx firebase-tools deploy --only functions --token=${{ secrets.FIREBASE_TOKEN }} --project=dev-golden-egg
