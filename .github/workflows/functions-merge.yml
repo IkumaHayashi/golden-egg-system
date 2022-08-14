@@ -21,7 +21,8 @@ jobs:
           NODE_CACHE_DEPENDENCY_PATH: functions/yarn.lock
       - run: yarn --cwd common && yarn --cwd functions --frozen-lockfile && yarn --cwd functions build
       - name: デバッグ
-        run: ls -al functions/node_modules/common
+        run: |
+          ls -al functions/node_modules/common
           ls -al functions/node_modules/common/
       - name: デプロイ
         run: |
