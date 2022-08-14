@@ -19,7 +19,7 @@ jobs:
         uses: ./.github/workflows/composite/setup
         with:
           NODE_CACHE_DEPENDENCY_PATH: functions/yarn.lock
-      - run: yarn --cwd functions --frozen-lockfile && yarn --cwd functions build
+      - run: yarn --cwd functions --frozen-lockfile && yarn --cwd common && yarn --cwd functions build
       - name: デバッグ
         run: ls -al functions/node_modules/common
       - name: デプロイ
