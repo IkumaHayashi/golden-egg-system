@@ -751,7 +751,7 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-"common@link:../common":
+"common@link:./common":
   version "0.0.0"
   uid ""
 
