@@ -22,6 +22,7 @@ jobs:
       - run: yarn --cwd common && yarn --cwd functions --frozen-lockfile && yarn --cwd functions build
       - name: デバッグ
         run: ls -al functions/node_modules/common
+          ls -al functions/node_modules/common/
       - name: デプロイ
         run: |
           npx firebase-tools deploy --only functions --token=${{ secrets.FIREBASE_TOKEN }} --project=dev-golden-egg
