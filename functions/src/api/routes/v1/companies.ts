@@ -13,6 +13,29 @@ router.get("/", (req, res) => {
     .status(200)
     .json(companies.filter((edinetCode) => edinetCode.listed === "上場"));
 });
+router.post("/search", async (req, res) => {
+  const fundCodes = (req.body.codes as string).split(",") ?? [];
+  const companies = (EdinetcodeDlInfo as Array<RawEdinetCode>)
+    .map((rawEdinetCode) => EdinetCode.fromJson(rawEdinetCode))
+    .filter((edinetCode) =>
+      fundCodes.some((fundCode) => fundCode + "0" === edinetCode.fund_code)
+    );
+  const quotes = await yahooFinance.quote(
+    fundCodes.map((fundCode) => fundCode + ".T")
+  );
+
+  const responses: Array<ICompanyResponse> = companies.map((company) => {
+    const quote = quotes.find(
+      (rawQuote) => rawQuote.symbol.substring(0, 4) + "0" === company.fund_code
+    );
+    return {
+      ...company,
+      price: quote?.regularMarketPrice,
+      currency: quote?.currency,
+    };
+  });
+  res.status(201).json(responses);
+});
 router.get("/:fundCode", async (req, res) => {
   const companies = (EdinetcodeDlInfo as Array<RawEdinetCode>).map(
     (rawEdinetCode) => EdinetCode.fromJson(rawEdinetCode)
@@ -23,14 +46,14 @@ router.get("/:fundCode", async (req, res) => {
       : req.params.fundCode
   );
   const fundCode4 = fundCode.substring(0, 4);
-  const results = await yahooFinance.quote(fundCode4 + ".T");
+  const result = await yahooFinance.quote(fundCode4 + ".T");
   const edinetCode = companies.filter(
     (edinetCode) => edinetCode.fund_code === fundCode
   )[0];
   const response: ICompanyResponse = {
     ...edinetCode,
-    price: results.regularMarketPrice,
-    currency: results.currency,
+    price: result.regularMarketPrice,
+    currency: result.currency,
   };
   res.status(200).json(response);
 });
