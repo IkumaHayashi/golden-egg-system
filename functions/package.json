@@ -25,7 +25,8 @@
     "firebase-functions": "^3.14.1",
     "unzipper": "^0.10.11",
     "xbrl-parser": "^0.6.0",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "yahoo-finance2": "^2.3.6"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
