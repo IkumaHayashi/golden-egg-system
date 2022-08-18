@@ -1,31 +1,5 @@
 export class EdinetCode {
-    constructor(
-    /** ＥＤＩＮＥＴコード */
-    edinet_code, 
-    /** 提出者種別 */
-    kind, 
-    /** 上場区分 */
-    listed, 
-    /** 連結の有無 */
-    consolidated, 
-    /** 資本金 */
-    capital, 
-    /** 決算日 */
-    settlement_date, 
-    /** 提出者名 */
-    name, 
-    /** 提出者名（英字） */
-    name_alphabet, 
-    /** 提出者名（ヨミ） */
-    name_phonetic, 
-    /** 所在地 */
-    address, 
-    /** 提出者業種 */
-    type_of_industry, 
-    /** 証券コード */
-    fund_code, 
-    /** 提出者法人番号 */
-    corporate_code) {
+    constructor(edinet_code, kind, listed, consolidated, capital, settlement_date, name, name_alphabet, name_phonetic, address, type_of_industry, fund_code, corporate_code) {
         this.edinet_code = edinet_code;
         this.kind = kind;
         this.listed = listed;

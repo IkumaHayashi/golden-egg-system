@@ -4,13 +4,16 @@ import {
   EdinetCodeCnverter,
   RawEdinetCode,
 } from "./firestore/models/edinetCode.js";
-import { ICompanyResponse } from "./api/company.js";
+import { ICompany, Company } from "./api/company.js";
 import { FinancialIndicator } from "./firestore/models/financialIndicator.js";
+import { CompanyService } from "./service/companyService.js";
 export {
   EdinetDocument,
   FinancialIndicator,
   EdinetCode,
   EdinetCodeCnverter,
   RawEdinetCode,
-  ICompanyResponse,
+  ICompany,
+  Company,
+  CompanyService,
 };

@@ -14,7 +14,7 @@ export interface RawEdinetCode {
     証券コード: string;
     提出者法人番号: string;
 }
-export declare class EdinetCode {
+export interface IEdinetCode {
     /** ＥＤＩＮＥＴコード */
     readonly edinet_code: string;
     /** 提出者種別 */
@@ -41,33 +41,22 @@ export declare class EdinetCode {
     readonly fund_code: string;
     /** 提出者法人番号 */
     readonly corporate_code: string;
-    constructor(
-    /** ＥＤＩＮＥＴコード */
-    edinet_code: string, 
-    /** 提出者種別 */
-    kind: string, 
-    /** 上場区分 */
-    listed: string, 
-    /** 連結の有無 */
-    consolidated: string, 
-    /** 資本金 */
-    capital: string, 
-    /** 決算日 */
-    settlement_date: string, 
-    /** 提出者名 */
-    name: string, 
-    /** 提出者名（英字） */
-    name_alphabet: string, 
-    /** 提出者名（ヨミ） */
-    name_phonetic: string, 
-    /** 所在地 */
-    address: string, 
-    /** 提出者業種 */
-    type_of_industry: string, 
-    /** 証券コード */
-    fund_code: string, 
-    /** 提出者法人番号 */
-    corporate_code: string);
+}
+export declare class EdinetCode implements IEdinetCode {
+    readonly edinet_code: string;
+    readonly kind: string;
+    readonly listed: string;
+    readonly consolidated: string;
+    readonly capital: string;
+    readonly settlement_date: string;
+    readonly name: string;
+    readonly name_alphabet: string;
+    readonly name_phonetic: string;
+    readonly address: string;
+    readonly type_of_industry: string;
+    readonly fund_code: string;
+    readonly corporate_code: string;
+    constructor(edinet_code: string, kind: string, listed: string, consolidated: string, capital: string, settlement_date: string, name: string, name_alphabet: string, name_phonetic: string, address: string, type_of_industry: string, fund_code: string, corporate_code: string);
     static fromJson(rawObject: RawEdinetCode): EdinetCode;
 }
 export declare const EdinetCodeCnverter: Converter<EdinetCode>;
