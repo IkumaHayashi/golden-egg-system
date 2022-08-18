@@ -28,10 +28,20 @@ router.post("/search", async (req, res) => {
     const quote = quotes.find(
       (rawQuote) => rawQuote.symbol.substring(0, 4) + "0" === company.fund_code
     );
+    const dividendYield =
+      quote?.regularMarketPrice && quote?.regularMarketPrice
+        ? (quote?.trailingAnnualDividendRate! / quote?.regularMarketPrice!) *
+          100
+        : undefined;
     return {
       ...company,
       price: quote?.regularMarketPrice,
       currency: quote?.currency,
+      dividend: quote?.trailingAnnualDividendRate,
+      dividend_yield:
+        dividendYield !== undefined
+          ? parseFloat(dividendYield?.toFixed(2))
+          : undefined,
     };
   });
   res.status(201).json(responses);
@@ -46,14 +56,23 @@ router.get("/:fundCode", async (req, res) => {
       : req.params.fundCode
   );
   const fundCode4 = fundCode.substring(0, 4);
-  const result = await yahooFinance.quote(fundCode4 + ".T");
+  const quote = await yahooFinance.quote(fundCode4 + ".T");
   const edinetCode = companies.filter(
     (edinetCode) => edinetCode.fund_code === fundCode
   )[0];
+  const dividendYield =
+    quote?.regularMarketPrice && quote?.regularMarketPrice
+      ? (quote?.trailingAnnualDividendRate! / quote?.regularMarketPrice!) * 100
+      : undefined;
   const response: ICompanyResponse = {
     ...edinetCode,
-    price: result.regularMarketPrice,
-    currency: result.currency,
+    price: quote.regularMarketPrice,
+    currency: quote.currency,
+    dividend: quote.trailingAnnualDividendRate,
+    dividend_yield:
+      dividendYield !== undefined
+        ? parseFloat(dividendYield?.toFixed(2))
+        : undefined,
   };
   res.status(200).json(response);
 });
