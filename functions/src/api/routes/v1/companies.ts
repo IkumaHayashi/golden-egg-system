@@ -1,4 +1,4 @@
-import { EdinetCode, RawEdinetCode, ICompanyResponse } from "common";
+import { EdinetCode, RawEdinetCode, ICompany, CompanyService } from "common";
 import EdinetcodeDlInfo from "./EdinetcodeDlInfo.json" assert { type: "json" };
 import express from "express";
 import yahooFinance from "yahoo-finance2";
@@ -24,25 +24,11 @@ router.post("/search", async (req, res) => {
     fundCodes.map((fundCode) => fundCode + ".T")
   );
 
-  const responses: Array<ICompanyResponse> = companies.map((company) => {
+  const responses: Array<ICompany> = companies.map((company) => {
     const quote = quotes.find(
       (rawQuote) => rawQuote.symbol.substring(0, 4) + "0" === company.fund_code
     );
-    const dividendYield =
-      quote?.regularMarketPrice && quote?.regularMarketPrice
-        ? (quote?.trailingAnnualDividendRate! / quote?.regularMarketPrice!) *
-          100
-        : undefined;
-    return {
-      ...company,
-      price: quote?.regularMarketPrice,
-      currency: quote?.currency,
-      dividend: quote?.trailingAnnualDividendRate,
-      dividend_yield:
-        dividendYield !== undefined
-          ? parseFloat(dividendYield?.toFixed(2))
-          : undefined,
-    };
+    return CompanyService.generate(company, quote);
   });
   res.status(201).json(responses);
 });
@@ -60,20 +46,7 @@ router.get("/:fundCode", async (req, res) => {
   const edinetCode = companies.filter(
     (edinetCode) => edinetCode.fund_code === fundCode
   )[0];
-  const dividendYield =
-    quote?.regularMarketPrice && quote?.regularMarketPrice
-      ? (quote?.trailingAnnualDividendRate! / quote?.regularMarketPrice!) * 100
-      : undefined;
-  const response: ICompanyResponse = {
-    ...edinetCode,
-    price: quote.regularMarketPrice,
-    currency: quote.currency,
-    dividend: quote.trailingAnnualDividendRate,
-    dividend_yield:
-      dividendYield !== undefined
-        ? parseFloat(dividendYield?.toFixed(2))
-        : undefined,
-  };
+  const response = CompanyService.generate(edinetCode, quote);
   res.status(200).json(response);
 });
 
